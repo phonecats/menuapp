@@ -1,0 +1,11 @@
+Notes for webpack:
+
+WebpackReadyReactApp file structure:
+-project folder
+ -index.html
+ -main.css
+ -main.js
+ -bundle.js
+ -webpack.config.js
+ -package.json 
+ -node_modules (Contains all the other dependencies)
