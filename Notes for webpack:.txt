@@ -9,3 +9,46 @@ WebpackReadyReactApp file structure:
  -webpack.config.js
  -package.json 
  -node_modules (Contains all the other dependencies)
+
+
+ github:
+ 1.create online repo and follow ALL instructions
+ 2.git add *
+ 3.git commit -m "commit message"
+ 4.git push origin master
+
+
+ First commands:
+$ git  --global user.name "name"
+$ git --global user.email "email"
+
+Create a Repository:
+/A repository is just like a folder. It holds the project structure
+You tell Git what your project is and Git will start tracking all of the changes to that folder. Files added or subtracted or even a single letter in a single file changed -- all of it's tracked and time stamped by Git. That's version control.
+
+$ git init // initiates git to start tracking the current directory's  file contents
+
+$ git status 	//Git repository status
+				// Check to see if there have been any changes
+$ git add filename //add files you would like to commit
+$ git commit -m "commit message" //Submit the files you added to save
+$ git diff	   //show diferences between files since last commit
+
+
+
+---------------LOG------------------------------
+
+Aprile 29, 2017
+-Started from a blank template workspace already setup with npm, webpack, and various other dependencies including babel.
+The main 1-page app will live in index.html
+-the entry for webpack will be main.js and output will be on bundle.js
+
+(Reference: https://scotch.io/tutorials/getting-started-with-webpack-module-bundling-magic)
+
+-Added bootstrapv3 to index.html
+
+April 30, 2017
+-Added a couple of react components to main.js
+
+Requirements:
+
