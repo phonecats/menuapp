@@ -35,39 +35,122 @@ class Header extends React.Component{
 	};
 } // end of header component
 
+class Item extends React.Component {
+  /*:
+    Ex: <ItemComponent item = {element}  addToCart = {() => this.addToCart(dataItems[index].itemID)} />
+    element => name, imgURL, price
+    addToCart = addToCart()  
+  */
+  render(){
+    return(
+    <div className = "col-sm-6">
+        <h3> {this.props.item.name}</h3>
+      </div>
+    )
+  }
+}
+
+
 
 class Appetizers extends React.Component{
 	render(){
+
+		//Create array of Components ready for Rendering
+		var appetizersArray = []; //blank initially
+		this.props.appetizersArray.forEach((element,index) => {
+			appetizersArray.push(<Item item={element} />)}) ;
+		//
+
 		return( 
 				<div> 
 					<h2>Appetizers</h2>
+					{appetizersArray}				
 				 </div>
 			)
 	}
 }
 
 class Menu extends React.Component{
+
+
 	render(){
+		//Code below handles sorting the data and creating
+		//new array with only appetizer objects
+		var appetizersArray=[];
+		this.props.items.forEach((element,index)=>{
+			if (element.category=="Appetizer"){
+				appetizersArray.push(element)
+				console.log(element.name)
+				}
+		})
+		//
+
 		return(
 			<div>
-				<h1> Menu </h1>
-				{<Appetizers />}
-				
+				<h1> Menu Component</h1>
+				{ <Appetizers appetizersArray={appetizersArray} />}
 			</div>
 			)
 		}
 	}
 
+//ITEMS from main data base
 class App extends React.Component{
+	
+
 	render(){
-		return(
+
+		var oscar = 1;
+			return(
 			<div>
 				{<Header />}
-				{<Menu />}
+				{<Menu items={ITEMS}/> } 
+
 			</div>
 			)
 	}
 }
+
+//DATA
+const ITEMS = [
+    {
+  itemID: 1,
+  name:"Item 1",
+  imgURL: "https://placehold.it/300",
+  price: 7.99,
+  isFeatured: false,
+  category: "Appetizer"
+    },
+  {
+    itemID: 2,
+  name: "Item 2",
+  imgURL: "https://placehold.it/300",
+  featuredImgURL: "https://placehold.it/200",
+  price: 19.99,
+   isFeatured: true,
+   category: "Drink"
+},
+  {
+    itemID: 3,
+    name: "Item 3",
+    price: 50,
+      featuredImgURL: "https://placehold.it/200",
+    imgURL: "https://placehold.it/300x300",
+    category: "Appetizer"
+  },
+  {
+    itemID: 4,
+    name: "Item 4",
+    imgURL: "https://placehold.it/300",
+    price: 25,
+    featuredImgURL: "https://placehold.it/230",
+    isFeatured: true,
+    category: "Main Dish"
+  }
+  
+]
+//END OF DATA.
+
 
 ReactDOM.render(
   <App />,

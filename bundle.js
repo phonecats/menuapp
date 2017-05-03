@@ -9549,175 +9549,261 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Header = function (_React$Component) {
-	_inherits(Header, _React$Component);
+  _inherits(Header, _React$Component);
 
-	function Header() {
-		_classCallCheck(this, Header);
+  function Header() {
+    _classCallCheck(this, Header);
 
-		return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
-	}
+    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+  }
 
-	_createClass(Header, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'nav',
-				{ className: 'navbar navbar-default' },
-				_react2.default.createElement(
-					'div',
-					{ className: 'container-fluid' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'navbar-header' },
-						_react2.default.createElement(
-							'button',
-							{ type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
-							_react2.default.createElement(
-								'span',
-								{ className: 'sr-only' },
-								'Toggle navigation'
-							),
-							_react2.default.createElement('span', { className: 'icon-bar' }),
-							_react2.default.createElement('span', { className: 'icon-bar' }),
-							_react2.default.createElement('span', { className: 'icon-bar' })
-						),
-						_react2.default.createElement(
-							'a',
-							{ className: 'navbar-brand', href: '#' },
-							'Menu App'
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
-						_react2.default.createElement(
-							'ul',
-							{ className: 'nav navbar-nav' },
-							_react2.default.createElement(
-								'li',
-								null,
-								_react2.default.createElement(
-									'a',
-									{ href: '#' },
-									'Appetizers ',
-									_react2.default.createElement(
-										'span',
-										{ className: 'sr-only' },
-										'(current)'
-									)
-								)
-							),
-							_react2.default.createElement(
-								'li',
-								null,
-								_react2.default.createElement(
-									'a',
-									{ href: '#' },
-									'Shopping Cart'
-								)
-							)
-						),
-						_react2.default.createElement(
-							'ul',
-							{ className: 'nav navbar-nav navbar-right' },
-							_react2.default.createElement(
-								'li',
-								null,
-								_react2.default.createElement(
-									'a',
-									{ href: '#' },
-									'Sign In'
-								)
-							)
-						)
-					)
-				)
-			);
-		}
-	}]);
+  _createClass(Header, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'nav',
+        { className: 'navbar navbar-default' },
+        _react2.default.createElement(
+          'div',
+          { className: 'container-fluid' },
+          _react2.default.createElement(
+            'div',
+            { className: 'navbar-header' },
+            _react2.default.createElement(
+              'button',
+              { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
+              _react2.default.createElement(
+                'span',
+                { className: 'sr-only' },
+                'Toggle navigation'
+              ),
+              _react2.default.createElement('span', { className: 'icon-bar' }),
+              _react2.default.createElement('span', { className: 'icon-bar' }),
+              _react2.default.createElement('span', { className: 'icon-bar' })
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'navbar-brand', href: '#' },
+              'Menu App'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+            _react2.default.createElement(
+              'ul',
+              { className: 'nav navbar-nav' },
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: '#' },
+                  'Appetizers ',
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'sr-only' },
+                    '(current)'
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: '#' },
+                  'Shopping Cart'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: 'nav navbar-nav navbar-right' },
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: '#' },
+                  'Sign In'
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
 
-	return Header;
+  return Header;
 }(_react2.default.Component); // end of header component
 
+var Item = function (_React$Component2) {
+  _inherits(Item, _React$Component2);
 
-var Appetizers = function (_React$Component2) {
-	_inherits(Appetizers, _React$Component2);
+  function Item() {
+    _classCallCheck(this, Item);
 
-	function Appetizers() {
-		_classCallCheck(this, Appetizers);
+    return _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).apply(this, arguments));
+  }
 
-		return _possibleConstructorReturn(this, (Appetizers.__proto__ || Object.getPrototypeOf(Appetizers)).apply(this, arguments));
-	}
+  _createClass(Item, [{
+    key: 'render',
 
-	_createClass(Appetizers, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'h2',
-					null,
-					'Appetizers'
-				)
-			);
-		}
-	}]);
+    /*:
+      Ex: <ItemComponent item = {element}  addToCart = {() => this.addToCart(dataItems[index].itemID)} />
+      element => name, imgURL, price
+      addToCart = addToCart()  
+    */
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'col-sm-6' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          ' ',
+          this.props.item.name
+        )
+      );
+    }
+  }]);
 
-	return Appetizers;
+  return Item;
 }(_react2.default.Component);
 
-var Menu = function (_React$Component3) {
-	_inherits(Menu, _React$Component3);
+var Appetizers = function (_React$Component3) {
+  _inherits(Appetizers, _React$Component3);
 
-	function Menu() {
-		_classCallCheck(this, Menu);
+  function Appetizers() {
+    _classCallCheck(this, Appetizers);
 
-		return _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).apply(this, arguments));
-	}
+    return _possibleConstructorReturn(this, (Appetizers.__proto__ || Object.getPrototypeOf(Appetizers)).apply(this, arguments));
+  }
 
-	_createClass(Menu, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'h1',
-					null,
-					' Menu '
-				),
-				_react2.default.createElement(Appetizers, null)
-			);
-		}
-	}]);
+  _createClass(Appetizers, [{
+    key: 'render',
+    value: function render() {
+      var itemsArray = []; //blank initially
+      this.props.appetizers.forEach(function (element, index) {
+        itemsArray.push(_react2.default.createElement(Item, { item: element }));
+      });
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h2',
+          null,
+          'Appetizers'
+        ),
+        itemsArray
+      );
+    }
+  }]);
 
-	return Menu;
+  return Appetizers;
 }(_react2.default.Component);
 
-var App = function (_React$Component4) {
-	_inherits(App, _React$Component4);
+var Menu = function (_React$Component4) {
+  _inherits(Menu, _React$Component4);
 
-	function App() {
-		_classCallCheck(this, App);
+  function Menu() {
+    _classCallCheck(this, Menu);
 
-		return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-	}
+    return _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).apply(this, arguments));
+  }
 
-	_createClass(App, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(Header, null),
-				_react2.default.createElement(Menu, null)
-			);
-		}
-	}]);
+  _createClass(Menu, [{
+    key: 'render',
+    value: function render() {
+      var appetizersArray = [];
+      this.props.items.forEach(function (element, index) {
+        if (element.category == "Appetizer") {
+          console.log("yes");
+        }
+      });
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h1',
+          null,
+          ' Menu Component'
+        ),
+        _react2.default.createElement(Appetizers, { appetizers: this.props.items })
+      );
+    }
+  }]);
 
-	return App;
+  return Menu;
 }(_react2.default.Component);
+
+//ITEMS from main data base
+
+
+var App = function (_React$Component5) {
+  _inherits(App, _React$Component5);
+
+  function App() {
+    _classCallCheck(this, App);
+
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+  }
+
+  _createClass(App, [{
+    key: 'render',
+    value: function render() {
+
+      var oscar = 1;
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(Header, null),
+        _react2.default.createElement(Menu, { items: ITEMS })
+      );
+    }
+  }]);
+
+  return App;
+}(_react2.default.Component);
+
+//DATA
+
+
+var ITEMS = [{
+  itemID: 1,
+  name: "Item 1",
+  imgURL: "https://placehold.it/300",
+  price: 7.99,
+  isFeatured: false,
+  category: "Appetizer"
+}, {
+  itemID: 2,
+  name: "Item 2",
+  imgURL: "https://placehold.it/300",
+  featuredImgURL: "https://placehold.it/200",
+  price: 19.99,
+  isFeatured: true,
+  category: "Drink"
+}, {
+  itemID: 3,
+  name: "Item 3",
+  price: 50,
+  featuredImgURL: "https://placehold.it/200",
+  imgURL: "https://placehold.it/300x300",
+  category: "Appetizer"
+}, {
+  itemID: 4,
+  name: "Item 4",
+  imgURL: "https://placehold.it/300",
+  price: 25,
+  featuredImgURL: "https://placehold.it/230",
+  isFeatured: true,
+  category: "Main Dish"
+}];
+//END OF DATA.
+
 
 _reactDom2.default.render(_react2.default.createElement(App, null),
 //WHERE TO RENDER VIRTUAL DOM
