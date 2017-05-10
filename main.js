@@ -1,8 +1,8 @@
-
-
+//Oscar Chavez April 2017
+//ReactJS, Bootstrap CSS, Stripe.
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+``
 
 class Header extends React.Component{
 	render(){
@@ -17,7 +17,7 @@ class Header extends React.Component{
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
       </button>
-      <a className="navbar-brand" href="#">Sebastian benjamin Chavez</a>
+      <a className="navbar-brand" href="#">Jalisco's</a>
     </div>
 
     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -42,33 +42,83 @@ class Item extends React.Component {
     addToCart = addToCart()  
   */
   render(){
+
+
+  	function sayHello(){
+  		var q = document.getElementById('quantity')
+  		console.log(q)
+  	}
+  	//////////////////////////////////////////////////i left off here.
+  	//still trying to submit order details in order processing.
     return(
     <div className = "col-sm-6">
         <h3> {this.props.item.name}</h3>
         <p> {this.props.item.price}</p>
-        <button> Add to Cart </button>\
+        <p id="quantity" > 1 </p>
+        <button onClick={() => sayHello()}> DaleRamon </button>
+        <select className="form-control">
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option>5</option>
+</select>
+        <button onClick={() =>this.props.addToCart()}> Add to Cart </button>
       </div>
     )
   }
 }
 
+class ShoppingCart extends React.Component{
 
 
-class CategoryView extends React.Component{
 	render(){
-		//Create array of Components ready for Rendering\
-		return( 
-				<div>
-					{this.props.CategoryArray}				
-				 </div>
+		var totalPrice = 0;
+		
+		return(
+			<div> 
+				<h2> Shopping Cart </h2>
+				{console.log(this.props.items[0].name)}
+				<h3> Total : </h3>
+			</div>
+
 			)
 	}
 }
 
 class Menu extends React.Component{
+	constructor(){
+		super();
+		this.state = {
+			virtualShoppingCart: []
+		}
+	}
+
+	//belongs to itemObject to handle click21
+	addToCart(itemID){
+		this.setState((prevState)=> ({
+		virtualShoppingCart: prevState.virtualShoppingCart.concat([itemID])
+			}));
+
+	}
+
+	updateCurrentOrder(){
+		function wait(ms){
+			var start = new Date().getTime();
+			var end = start;
+			while( end < start + msx) {
+				end = new Date().getTime();
+			}
+
+		}
+		wait(1000);
+		console.log(this.state.virtualShoppingCart)	
+	}
+
 
 	render(){
 
+		//*Current Order
 
 		//*Appetizers
 		//Code below handles sorting the data and creating
@@ -76,7 +126,16 @@ class Menu extends React.Component{
 		var appetizersArray=[];
 		this.props.items.forEach( (element,index)=>{
 			if (element.category=="Appetizer"){
-				appetizersArray.push(<Item item={element} />)}});
+				appetizersArray.push(
+					<Item item={element}
+				   			addToCart = {
+				   					()=> this.addToCart(element)
+				   					}
+				   			quantity ="0"
+				   			 />)
+				   			}
+
+			});
 		//
 		//*Main Dishes
 		var mainDishArray = [];
@@ -97,12 +156,17 @@ class Menu extends React.Component{
 		return(
 			<div>
 				<h1> Menu Component</h1>
+				{/*Conditional rendering of shopping Cart*/}
+				{this.state.virtualShoppingCart.length > 0 ? (
+					<ShoppingCart items={this.state.virtualShoppingCart} />
+					) : ("")}
+
 				<h2> Appetizers </h2>
-				{ <CategoryView CategoryArray={appetizersArray} />}
+				{appetizersArray}
 				<h2> Main Dishes </h2>
-				{ <CategoryView CategoryArray={mainDishArray} />}
+				{mainDishArray} 
 				<h2> Drinks </h2>
-				{<CategoryView CategoryArray={drinksArray} />}
+				{drinksArray}
 				<h2> Order Details </h2>
 			</div>
 			)
@@ -114,8 +178,6 @@ class App extends React.Component{
 	
 
 	render(){
-
-		var oscar = 1;
 			return(
 			<div>
 				{<Header />}
@@ -129,7 +191,7 @@ class App extends React.Component{
 //DATA
 const ITEMS = [
     {
-  itemID: 1,
+  itemID: 1001,
   name:"Item 1",
   imgURL: "https://placehold.it/300",
   price: 7.99,
@@ -137,7 +199,7 @@ const ITEMS = [
   category: "Appetizer"
     },
   {
-    itemID: 2,
+    itemID: 1002,
   name: "Item 2",
   imgURL: "https://placehold.it/300",
   featuredImgURL: "https://placehold.it/200",
@@ -146,7 +208,7 @@ const ITEMS = [
    category: "Drink"
 },
   {
-    itemID: 3,
+    itemID: 1003,
     name: "Item 3",
     price: 50,
       featuredImgURL: "https://placehold.it/200",
@@ -154,7 +216,7 @@ const ITEMS = [
     category: "Appetizer"
   },
   {
-    itemID: 4,
+    itemID: 1004,
     name: "Item 4",
     imgURL: "https://placehold.it/300",
     price: 25,
@@ -163,7 +225,7 @@ const ITEMS = [
     category: "Main Dish"
   },
   {
-  	itemID: 5,
+  	itemID: 1005,
   	name: "Beef Fajitas",
   	price: 11.99,
   	category: "Main Dish"
