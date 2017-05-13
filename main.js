@@ -1,7 +1,10 @@
 //Oscar Chavez April 2017
 //ReactJS, Bootstrap CSS, Stripe.
-import React from 'react';
-import ReactDOM from 'react-dom';
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+
 ``
 
 class Header extends React.Component{
@@ -36,33 +39,30 @@ class Header extends React.Component{
 } // end of header component
 
 class Item extends React.Component {
+  
   /*:
     Ex: <ItemComponent item = {element}  addToCart = {() => this.addToCart(dataItems[index].itemID)} />
     element => name, imgURL, price
     addToCart = addToCart()  
   */
+
   render(){
+  	var order={};
 
 
-  	function sayHello(){
-  		var q = document.getElementById('quantity')
-  		console.log(q)
+  	function order(){
+
   	}
+  
   	//////////////////////////////////////////////////i left off here.
   	//still trying to submit order details in order processing.
     return(
     <div className = "col-sm-6">
         <h3> {this.props.item.name}</h3>
-        <p> {this.props.item.price}</p>
-        <p id="quantity" > 1 </p>
-        <button onClick={() => sayHello()}> DaleRamon </button>
-        <select className="form-control">
-  <option>1</option>
-  <option>2</option>
-  <option>3</option>
-  <option>4</option>
-  <option>5</option>
-</select>
+        
+        Quantity <input type="text" name="name"></input>
+        
+
         <button onClick={() =>this.props.addToCart()}> Add to Cart </button>
       </div>
     )
@@ -82,7 +82,7 @@ class ShoppingCart extends React.Component{
 				<h3> Total : </h3>
 			</div>
 
-			)
+`	`			)
 	}
 }
 
@@ -95,24 +95,8 @@ class Menu extends React.Component{
 	}
 
 	//belongs to itemObject to handle click21
-	addToCart(itemID){
-		this.setState((prevState)=> ({
-		virtualShoppingCart: prevState.virtualShoppingCart.concat([itemID])
-			}));
-
-	}
-
-	updateCurrentOrder(){
-		function wait(ms){
-			var start = new Date().getTime();
-			var end = start;
-			while( end < start + msx) {
-				end = new Date().getTime();
-			}
-
-		}
-		wait(1000);
-		console.log(this.state.virtualShoppingCart)	
+	addToCart(element){
+		console.log(element)
 	}
 
 
@@ -131,8 +115,8 @@ class Menu extends React.Component{
 				   			addToCart = {
 				   					()=> this.addToCart(element)
 				   					}
-				   			quantity ="0"
-				   			 />)
+				   			 />);
+
 				   			}
 
 			});
