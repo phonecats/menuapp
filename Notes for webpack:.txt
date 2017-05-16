@@ -35,6 +35,7 @@ $ git commit -m "commit message" //Submit the files you added to save
 $ git diff	   //show diferences between files since last commit
 
 
+github create a branch
 
 ---------------LOG------------------------------
 

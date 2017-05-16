@@ -1,6 +1,6 @@
-//Oscar Chavez April 2017
-//ReactJS, Bootstrap CSS, Stripe.
 
+//Oscar Chavez April 2017
+//ReactJS, Bootstrap, jQuery, Babel, Webpack, 
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -20,16 +20,16 @@ class Header extends React.Component{
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
       </button>
-      <a className="navbar-brand" href="#">Jalisco's</a>
+      <a className="navbar-brand" href="#">The Ranch House Cafe</a>
     </div>
 
     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul className="nav navbar-nav">
-        <li><a href="#">Appetizers <span className="sr-only">(current)</span></a></li>
-        <li><a href="#">Shopping Cart</a></li>
+        <li><a  href="#">Menu </a></li>
+        <li><a href="#"></a></li>
       </ul>
       <ul className="nav navbar-nav navbar-right">
-        <li><a href="#">Sign In</a></li>
+        <li><a href="#"></a></li>
       </ul>
     </div>
   </div>
@@ -38,6 +38,19 @@ class Header extends React.Component{
 	};
 } // end of header component
 
+class ItemShoppingCart extends React.Component{
+	render(){
+
+		return(
+			 <div className = "col-sm-4">
+        	<h3 className="text-center"> {this.props.item.name}</h3>
+        	<img className="img-fluid" src={this.props.item.imgURL}/> 
+
+        	<h3> Qty:{this.props.item.quantity}</h3>
+        </div>
+			)
+	}
+}
 class Item extends React.Component {
   
   /*:
@@ -45,114 +58,220 @@ class Item extends React.Component {
     element => name, imgURL, price
     addToCart = addToCart()  
   */
+  constructor(props){
+  	super(props);
+  	this.handleQuantityButton = this.handleQuantityButton.bind(this)
+  	this.state = this.props.item;
+ 
+  }//end constructor
+
+  handleQuantityButton(n){
+  	this.setState({
+  		quantity: n
+  	})
+  }
+
+  //this bad boy lifts state up to menu component
+  handleAddToCart(){
+  	if (this.state.quantity > 0){
+  		this.props.addToCart(this.state);	
+  	}
+  }
 
   render(){
-  	var order={};
-
-
-  	function order(){
-
-  	}
-  
-  	//////////////////////////////////////////////////i left off here.
-  	//still trying to submit order details in order processing.
     return(
-    <div className = "col-sm-6">
+    <div className = "col-sm-4">
         <h3> {this.props.item.name}</h3>
-        
-        Quantity <input type="text" name="name"></input>
-        
-
-        <button onClick={() =>this.props.addToCart()}> Add to Cart </button>
-      </div>
-    )
+        <img className="img-fluid" src={this.props.item.imgURL}/> 
+        <div className="dropdown">
+	  		<button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
+	  			Quantity
+	    		<span className="caret"></span>
+	  		</button>
+			  <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+			    <li><button className="btn btn-default" onClick={()=>this.handleQuantityButton(1)} > 1 </button></li>
+			    <li> <button className="btn btn-default" onClick={()=>this.handleQuantityButton(2)} > 2 </button> </li>
+			    <li><button className="btn btn-default" onClick={()=>this.handleQuantityButton(3)} > 3 </button>   </li>  
+			  </ul>
+		</div>
+		<button onClick={()=>this.handleAddToCart()}> Add to Cart</button>
+   		
+    </div>
+   )//end of return
   }
 }
 
-class ShoppingCart extends React.Component{
+class Payment extends React.Component{
+	render(){
+		return(
+			<div>
+				<h2> Billing Info</h2>
+				First Name: <input type="text" />
+				Last Name: <input type="text" />
+				CC: <input type="text" />
+			</div>
+			)
+	}
+}
 
+class ShoppingCart extends React.Component{
+	//ShoppingCart is responsible for rendering the items
+	//in the shopping cart, with the ability to remove from it.
+	//it also has a button that when pressed,
+	//the payment collection component is renderered
+
+	constructor(props){
+		super();
+		this.state ={
+			paymentToggle: false,
+		}
+	}
+
+	calculateSum(){
+		var sum=0;
+		for (var i =0 ; i <this.props.order.length; i++){
+			sum = sum + this.props.order[i].price
+			}
+		return sum
+	}
+
+
+	paymentToggleController(){
+		console.log("checkout button pressed")
+		if (this.state.paymentToggle == false){
+			this.setState({
+				paymentToggle: true,
+			})
+		} else {
+			this.setState({
+				paymentToggle: false,
+			}) 
+		}
+
+	}
+
+	paymentRender(){
+		return <Payment />
+	}
 
 	render(){
-		var totalPrice = 0;
-		
-		return(
-			<div> 
-				<h2> Shopping Cart </h2>
-				{console.log(this.props.items[0].name)}
-				<h3> Total : </h3>
-			</div>
+		//get local copy of order
+		var Order = this.props.order;
+		//array will contain ItemShoppingCart components
+		var orderList = []
+		Order.forEach((element,index) => {
+			orderList.push(<ItemShoppingCart item={element} />)
+		})
 
-`	`			)
+		//the sum of the total order
+		var sum = this.calculateSum();
+
+		return(
+			<div className="container">
+				<div className="row">
+					<h1>ShoppingCart</h1>
+					{orderList}
+				</div>
+				<div className="row">
+					<h2> Total: {sum}</h2>
+
+					<button onClick={()=>this.paymentToggleController()}> Checkout </button>
+					{this.state.paymentToggle ? this.paymentRender(): ""}
+					
+				</div>
+				</div>
+			)
 	}
 }
 
 class Menu extends React.Component{
-	constructor(){
+	constructor(props){
 		super();
 		this.state = {
-			virtualShoppingCart: []
+			virtualOrder: []
 		}
 	}
 
-	//belongs to itemObject to handle click21
-	addToCart(element){
-		console.log(element)
+	addToCart(item){
+		this.setState((prevState) => ({
+			virtualOrder: prevState.virtualOrder.concat([item])
+		}))
 	}
 
-
 	render(){
+	
+		var activeOrder = this.state.virtualOrder;
+
 
 		//*Current Order
-
 		//*Appetizers
+		//*MainDishes
+		//*Drinks
 		//Code below handles sorting the data and creating
 		//new array with only appetizer objects
 		var appetizersArray=[];
 		this.props.items.forEach( (element,index)=>{
-			if (element.category=="Appetizer"){
+			if (element.category=="Breakfast"){
 				appetizersArray.push(
 					<Item item={element}
-				   			addToCart = {
-				   					()=> this.addToCart(element)
-				   					}
+				   			addToCart = {(item)=> this.addToCart(item)}
 				   			 />);
 
 				   			}
 
 			});
 		//
-		//*Main Dishes
+		//*Category 2
 		var mainDishArray = [];
 		this.props.items.forEach((element, index) => {
-			if(element.category=="Main Dish"){
-				mainDishArray.push(<Item item={element} />)
+			if(element.category=="Sandwich"){
+				mainDishArray.push(<Item item={element} 
+									addToCart = {(item)=> this.addToCart(item)}
+									/>)
 			}
 		})
 		//
-		//*Drinks
+		//*Category 3 . check the condition to know what kind of cateogry
 		var drinksArray = [];
 		this.props.items.forEach((element,index) =>{
-			if (element.category=="Drink"){
-				drinksArray.push(<Item item={element} />)
+			if (element.category=="Dinners"){
+				drinksArray.push(<Item item={element}
+									addToCart = {(item)=> this.addToCart(item)}
+									 />)
 			}
 		})
 
-		return(
-			<div>
-				<h1> Menu Component</h1>
-				{/*Conditional rendering of shopping Cart*/}
-				{this.state.virtualShoppingCart.length > 0 ? (
-					<ShoppingCart items={this.state.virtualShoppingCart} />
-					) : ("")}
+		function shoppingCartRender(){
+			//render sC when it's not empty
+			//feed activeOrder to ShoppingCart component to render
+			//only after user has added >0 products to cart
+			
+			if (activeOrder.length > 0){
+				return <div> {<ShoppingCart order={activeOrder} />} </div>
 
-				<h2> Appetizers </h2>
-				{appetizersArray}
-				<h2> Main Dishes </h2>
+			}
+		}
+
+		return(
+			<div className="container" id="menu">
+				<h1 className="text-center"> Menu</h1>
+				{/*checkoutRender()*/}
+				<div className="row">
+					<h2 className="text-center"> Breakfast </h2>
+					{appetizersArray}
+				</div>
+				<div className="row">
+				<h2 className="text-center"> Sandwiches </h2>
 				{mainDishArray} 
-				<h2> Drinks </h2>
+				</div>
+				<div>
+				<h2 className="text-center"> Dinners </h2>
 				{drinksArray}
-				<h2> Order Details </h2>
+				{/*Conditional rendering of shopping Cart*/}
+				{shoppingCartRender()}
+				</div>
 			</div>
+
 			)
 		}
 	}
@@ -163,7 +282,7 @@ class App extends React.Component{
 
 	render(){
 			return(
-			<div>
+			<div className="container-fluid" id="app">
 				{<Header />}
 				{<Menu items={ITEMS}/> } 
 
@@ -174,46 +293,11 @@ class App extends React.Component{
 
 //DATA
 const ITEMS = [
-    {
-  itemID: 1001,
-  name:"Item 1",
-  imgURL: "https://placehold.it/300",
-  price: 7.99,
-  isFeatured: false,
-  category: "Appetizer"
-    },
-  {
-    itemID: 1002,
-  name: "Item 2",
-  imgURL: "https://placehold.it/300",
-  featuredImgURL: "https://placehold.it/200",
-  price: 19.99,
-   isFeatured: true,
-   category: "Drink"
-},
-  {
-    itemID: 1003,
-    name: "Item 3",
-    price: 50,
-      featuredImgURL: "https://placehold.it/200",
-    imgURL: "https://placehold.it/300x300",
-    category: "Appetizer"
-  },
-  {
-    itemID: 1004,
-    name: "Item 4",
-    imgURL: "https://placehold.it/300",
-    price: 25,
-    featuredImgURL: "https://placehold.it/230",
-    isFeatured: true,
-    category: "Main Dish"
-  },
-  {
-  	itemID: 1005,
-  	name: "Beef Fajitas",
-  	price: 11.99,
-  	category: "Main Dish"
-  }
+{"itemID":1001,"name":"Ranch House Combo","imgURL":"https://placehold.it/200","price":8,"category":"Breakfast"},{"itemID":1002,"name":"Huevos Ranch House","imgURL":"https://placehold.it/200","price":7,"category":"Breakfast"},{"itemID":1003,"name":"Steak & Eggs","imgURL":"https://placehold.it/200","price":11,"category":"Breakfast"},
+{"itemID":1004,"name":"Hamburger","imgURL":"https://placehold.it/200","price":8,"category":"Sandwich"},{"itemID":1005,"name":"Hot Ham & Cheese","imgURL":"https://placehold.it/200","price":8,"category":"Sandwich"},{"itemID":1006,"name":"BLT","imgURL":"https://placehold.it/200","price":8,"category":"Sandwich"},
+{"itemID":1007,"name":"Chicken Fried Steak","imgURL":"https://placehold.it/200","price":10,"category":"Dinners"},{"itemID":1008,"name":"Chopped Steak","imgURL":"https://placehold.it/200","price":10,"category":"Dinners"},{"itemID":1009,"name":"Tilapia","imgURL":"https://placehold.it/200","price":10,"category":"Dinners"},
+
+
   
 ]
 //END OF DATA.
@@ -224,3 +308,9 @@ ReactDOM.render(
   //WHERE TO RENDER VIRTUAL DOM
   document.getElementById('root')
 );
+
+/*
+{this.state.virtualOrder.length > 0 ? (
+					<ShoppingCart items={this.state.virtualOrder} />
+					) : ("")}
+					*/
