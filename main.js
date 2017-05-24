@@ -5,52 +5,45 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 
-``
+//Variables for app
+const RESTAURANT_NAME ="The Ranch House Cafe";
+const TITLE = "Menu";
+const CATEGORY1 ="Breakfast";
+const CATEGORY2 = "Sandwich";
+const CATEGORY3 ="Dinners";
 
 class Header extends React.Component{
 	render(){
+		var style = {
+			backgroundColor: "blue",
+			height: "100px",
+		}
 		return(
-<nav className="navbar navbar-default">
-  <div className="container-fluid">
-  
-    <div className="navbar-header">
-      <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span className="sr-only">Toggle navigation</span>
-        <span className="icon-bar"></span>
-        <span className="icon-bar"></span>
-        <span className="icon-bar"></span>
-      </button>
-      <a className="navbar-brand" href="#">The Ranch House Cafe</a>
-    </div>
-
-    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul className="nav navbar-nav">
-        <li><a  href="#">Menu </a></li>
-        <li><a href="#"></a></li>
-      </ul>
-      <ul className="nav navbar-nav navbar-right">
-        <li><a href="#"></a></li>
-      </ul>
-    </div>
+<nav >
+  <div className="container-fluid" style={style}>
+  	<h1 className="text-center"> {RESTAURANT_NAME} </h1>
   </div>
 </nav>
 			)
 	};
 } // end of header component
 
-class ItemShoppingCart extends React.Component{
+class Footer extends React.Component{
+	
 	render(){
-
+		var style ={
+			backgroundColor: "blue",
+			height: "200px",
+		}
 		return(
-			 <div className = "col-sm-4">
-        	<h3 className="text-center"> {this.props.item.name}</h3>
-        	<img className="img-fluid" src={this.props.item.imgURL}/> 
+			<div className="container-fluid" style={style}>
+			
 
-        	<h3> Qty:{this.props.item.quantity}</h3>
-        </div>
-			)
+				</div>)
 	}
 }
+
+
 class Item extends React.Component {
   
   /*:
@@ -79,13 +72,20 @@ class Item extends React.Component {
   }
 
   render(){
+  	var style = {
+  		backgroundColor: "gray",
+  	}
     return(
-    <div className = "col-sm-4">
-        <h3> {this.props.item.name}</h3>
+    <div className="col-sm-4" >
+    <div className="container-fluid" style={style} >
+        <h3 className="text-center"> {this.props.item.name}</h3>
         <img className="img-fluid" src={this.props.item.imgURL}/> 
+
+        <div className="row">
+        <div className="col-sm-6">
         <div className="dropdown">
 	  		<button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
-	  			Quantity
+	  			Qty: {this.state.quantity}
 	    		<span className="caret"></span>
 	  		</button>
 			  <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -94,9 +94,15 @@ class Item extends React.Component {
 			    <li><button className="btn btn-default" onClick={()=>this.handleQuantityButton(3)} > 3 </button>   </li>  
 			  </ul>
 		</div>
+		</div>
+		<div className="col-sm-6">
 		<button onClick={()=>this.handleAddToCart()}> Add to Cart</button>
-   		
-    </div>
+   		</div>
+   		</div>
+   	</div>
+
+   	</div>
+    
    )//end of return
   }
 }
@@ -104,8 +110,8 @@ class Item extends React.Component {
 class Payment extends React.Component{
 	render(){
 		return(
-			<div>
-				<h2> Billing Info</h2>
+			<div className="row">
+				<h2 className="col-sm-6"> Billing Info</h2>
 				First Name: <input type="text" />
 				Last Name: <input type="text" />
 				CC: <input type="text" />
@@ -114,6 +120,47 @@ class Payment extends React.Component{
 	}
 }
 
+class SubShoppingCartItem extends React.Component{
+	render(){
+		var style = {
+			backgroundColor: "red",
+			borderColor: "black",
+			border: "solid",
+			borderWidth: "5px",
+			minHeight: "200px",
+			minWidth: "250px"
+		}
+		return(
+			 <div className = "col-sm-2" style={style}>
+        		<h1> {this.props.item.name} </h1>
+        	</div>
+			)
+	}
+}
+class SubShoppingCart extends React.Component{
+	render(){
+		var style = {
+			backgroundColor: "pink",
+		}
+		var Order = this.props.order;
+		var orderItemized = [];
+
+		Order.forEach((object,index) => {
+			orderItemized.push(<SubShoppingCartItem item={object} /> )
+		})
+		return(
+
+			<div  className="container-fluid" style={style}>
+				<div className="row">
+					
+					{orderItemized}
+				</div>
+			</div>
+			)
+			
+	}
+
+}
 class ShoppingCart extends React.Component{
 	//ShoppingCart is responsible for rendering the items
 	//in the shopping cart, with the ability to remove from it.
@@ -154,20 +201,27 @@ class ShoppingCart extends React.Component{
 		return <Payment />
 	}
 
+
+
 	render(){
 		//get local copy of order
 		var Order = this.props.order;
 		//array will contain ItemShoppingCart components
 		var orderList = []
 		Order.forEach((element,index) => {
-			orderList.push(<ItemShoppingCart item={element} />)
+			orderList.push(<Item item={element} />)
 		})
 
 		//the sum of the total order
 		var sum = this.calculateSum();
 
+		//css
+		var style = {
+			"backgroundColor": "green",
+		}
+		//end css
 		return(
-			<div className="container">
+			<div  className="container-fluid" style={style}>
 				<div className="row">
 					<h1>ShoppingCart</h1>
 					{orderList}
@@ -201,7 +255,9 @@ class Menu extends React.Component{
 	render(){
 	
 		var activeOrder = this.state.virtualOrder;
-
+		var category1 = this.props.category1;
+		var category2 = this.props.category2;
+		var category3 = this.props.category3;
 
 		//*Current Order
 		//*Appetizers
@@ -209,10 +265,10 @@ class Menu extends React.Component{
 		//*Drinks
 		//Code below handles sorting the data and creating
 		//new array with only appetizer objects
-		var appetizersArray=[];
+		var category1Array =[];
 		this.props.items.forEach( (element,index)=>{
-			if (element.category=="Breakfast"){
-				appetizersArray.push(
+			if (element.category== category1 ){
+				category1Array.push(
 					<Item item={element}
 				   			addToCart = {(item)=> this.addToCart(item)}
 				   			 />);
@@ -222,20 +278,20 @@ class Menu extends React.Component{
 			});
 		//
 		//*Category 2
-		var mainDishArray = [];
+		var category2Array = [];
 		this.props.items.forEach((element, index) => {
-			if(element.category=="Sandwich"){
-				mainDishArray.push(<Item item={element} 
+			if(element.category==category2){
+				category2Array.push(<Item item={element} 
 									addToCart = {(item)=> this.addToCart(item)}
 									/>)
 			}
 		})
 		//
 		//*Category 3 . check the condition to know what kind of cateogry
-		var drinksArray = [];
+		var category3Array = [];
 		this.props.items.forEach((element,index) =>{
-			if (element.category=="Dinners"){
-				drinksArray.push(<Item item={element}
+			if (element.category== category3){
+				category3Array.push(<Item item={element}
 									addToCart = {(item)=> this.addToCart(item)}
 									 />)
 			}
@@ -252,24 +308,36 @@ class Menu extends React.Component{
 			}
 		}
 
+		function subShoppingCartRender(){
+			if (activeOrder.length > 0 ){
+				return <div> {<SubShoppingCart order={activeOrder} /> } </div>
+			}
+		}
+
+		var style = {
+			"backgroundColor": "yellow",
+		}
 		return(
-			<div className="container" id="menu">
-				<h1 className="text-center"> Menu</h1>
-				{/*checkoutRender()*/}
-				<div className="row">
-					<h2 className="text-center"> Breakfast </h2>
-					{appetizersArray}
+			<div className="container" style={style}>
+				<h1 className="text-center"> {TITLE}</h1>
+				{subShoppingCartRender()}
+				<div className="row" >
+				<h2 className="text-center"> {this.props.category1}</h2>
+				{category1Array}
 				</div>
 				<div className="row">
-				<h2 className="text-center"> Sandwiches </h2>
-				{mainDishArray} 
+				<h2 className="text-center"> {this.props.category2} </h2>
+				{category2Array} 
 				</div>
-				<div>
-				<h2 className="text-center"> Dinners </h2>
-				{drinksArray}
+				<div className="row">
+				<h2 className="text-center"> {this.props.category3} </h2>
+				{category3Array}
+				</div>
+				<div className="row">
 				{/*Conditional rendering of shopping Cart*/}
 				{shoppingCartRender()}
 				</div>
+				
 			</div>
 
 			)
@@ -280,11 +348,16 @@ class Menu extends React.Component{
 class App extends React.Component{
 	
 
+
 	render(){
+		var style = {
+			backgroundColor: 'red',
+		}
 			return(
-			<div className="container-fluid" id="app">
+			<div className="container-fluid" style={style} >
 				{<Header />}
-				{<Menu items={ITEMS}/> } 
+				{<Menu items={ITEMS} category1={CATEGORY1} category2={CATEGORY2} category3={CATEGORY3}/> } 
+				{<Footer />}
 
 			</div>
 			)
